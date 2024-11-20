@@ -1,12 +1,15 @@
 from datetime import datetime
-from fastapi import FastAPI
+from typing import Annotated
+from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 
 from core import database
 from service import FibonacciService
-
+from users.router.auth import auth_router
 from core.config import get_settings
-
+from users.schemas.user import User, UserRegister
+from users.service.user import UserService
+from users.service import auth
 settings = get_settings()
 
 app = FastAPI(
@@ -28,7 +31,10 @@ async def get_current_fibonacci_series():
     return await FibonacciService().get_fibonacci_from_time(time_str)
 
 @app.post("/fibonacci", tags=["fibonacci"])
-async def create_fibonacci_series(time_input: TimeInput):
+async def create_fibonacci_series(
+    time_input: TimeInput,
+    current_user: Annotated[User, Depends(auth.get_current_active_user)]
+):
     return await FibonacciService().get_fibonacci_from_time(time_input.time)
 
 
@@ -36,3 +42,22 @@ async def create_fibonacci_series(time_input: TimeInput):
 async def get_all_fibonacci_series():
     service = FibonacciService()
     return service.get_all_series()
+
+
+app.include_router(auth_router)
+
+
+@app.get("/test_user")
+async def test_user():
+    db = database.Session()
+
+    # Crear un usuario de prueba
+    user_service = UserService(db)
+    test_user = UserRegister(
+        name="jon",
+        username="jon",
+        email="jon@gmail.com",
+        password="1234"
+    )
+    user_service.register(test_user)
+    db.close()
