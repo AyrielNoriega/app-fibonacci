@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from models import FibonacciSeries
-from schemas import FibonacciSeries as FibonacciSeriesSchema , FibonacciSeriesCreate
+from fibonacci.models import FibonacciSeries
+from fibonacci.schemas import FibonacciSeries as FibonacciSeriesSchema , FibonacciSeriesCreate
 from core.database import Session
 
 class FibonacciService:
