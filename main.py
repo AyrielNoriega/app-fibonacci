@@ -5,8 +5,14 @@ from pydantic import BaseModel
 from core import database
 from service import FibonacciService
 
-app = FastAPI()
+from core.config import get_settings
 
+settings = get_settings()
+
+app = FastAPI(
+    openapi_prefix=settings.API_VERSION,
+)
+app.title = settings.APP_NAME
 
 database.Base.metadata.create_all(bind=database.engine)
 
