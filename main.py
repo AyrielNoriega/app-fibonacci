@@ -15,7 +15,7 @@ class TimeInput(BaseModel):
     time: str  # Formato HH:MM:SS
 
 
-@app.get("/")
+@app.get("/fibonacci")
 async def read_root():
     now = datetime.now()
     time_str = now.strftime("%H:%M:%S")
