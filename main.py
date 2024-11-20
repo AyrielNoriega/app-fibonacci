@@ -24,3 +24,9 @@ async def read_root():
 @app.post("/fibonacci")
 async def get_fibonacci_series(time_input: TimeInput):
     return await FibonacciService().get_fibonacci_from_time(time_input.time)
+
+
+@app.get("/fibonacci/all")
+async def get_all_fibonacci_series():
+    service = FibonacciService()
+    return service.get_all_series()

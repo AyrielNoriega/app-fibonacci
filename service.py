@@ -36,6 +36,10 @@ class FibonacciService:
         return {"series": series[::-1]}  # Devolver la serie en orden descendente
 
 
+    def get_all_series(self):
+        return self.db.query(FibonacciSeries).all()
+
+
     def save_series(self, series: FibonacciSeriesCreate):
         db_series = FibonacciSeries(time_str=series.time_str, series=series.series)
         self.db.add(db_series)
