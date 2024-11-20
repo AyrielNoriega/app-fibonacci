@@ -24,7 +24,7 @@ class TimeInput(BaseModel):
     time: str  # Formato HH:MM:SS
 
 
-@app.get("/fibonacci", tags=["fibonacci"])
+@app.get("/fibonacci", tags=["fibonacci"], dependencies=[Depends(auth.get_current_active_user)])
 async def get_current_fibonacci_series():
     now = datetime.now()
     time_str = now.strftime("%H:%M:%S")
@@ -38,7 +38,7 @@ async def create_fibonacci_series(
     return await FibonacciService().get_fibonacci_from_time(time_input.time)
 
 
-@app.get("/fibonacci/all", tags=["fibonacci"])
+@app.get("/fibonacci/all", tags=["fibonacci"], dependencies=[Depends(auth.get_current_active_user)])
 async def get_all_fibonacci_series():
     service = FibonacciService()
     return service.get_all_series()
