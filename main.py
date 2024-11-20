@@ -1,23 +1,24 @@
 from datetime import datetime
 from fastapi import FastAPI
+from pydantic import BaseModel
+from service import FibonacciService
 
 app = FastAPI()
 
-
+class TimeInput(BaseModel):
+    time: str  # Formato HH:MM:SS
 
 def fibonacci_series(x, y, n):
     series = [x, y]
     for _ in range(n):
         series.append(series[-1] + series[-2])
     return series
-
 @app.get("/")
 def read_root():
     now = datetime.now()
-    x = now.minute % 10  # Semilla X (último dígito de los minutos)
-    y = now.minute // 10  # Semilla Y (primer dígito de los minutos)
-    n = now.second  # Cantidad de números a mostrar
-    print(f"Hora: {now}")
-    print(f"Semilla X: {x}, Semilla Y: {y}, N: {n}")
-    series = fibonacci_series(x, y, n)
-    return {"series": series[::-1]}  # serie en orden descendente
+    time_str = now.strftime("%H:%M:%S")
+    return FibonacciService().get_fibonacci_from_time(time_str)
+
+@app.post("/fibonacci")
+def get_fibonacci_series(time_input: TimeInput):
+    return FibonacciService().get_fibonacci_from_time(time_input.time)
