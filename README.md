@@ -75,3 +75,26 @@ curl -X 'GET' \
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+
+## Docker
+
+Para iniciar la aplicación usando Docker, sigue estos pasos:
+
+1. Construye la imagen de Docker:
+    ```bash
+    docker build -t app-fibonacci .
+    ```
+
+2. Inicia un contenedor con la imagen creada:
+    ```bash
+    docker run -d -p 8000:8000 --name app-fibonacci-container app-fibonacci
+    ```
+
+3. Abre tu navegador y ve a `http://127.0.0.1:8000/docs` para ver la documentación interactiva de la API.
+
+Para detener y eliminar el contenedor, usa los siguientes comandos:
+```bash
+docker stop app-fibonacci-container
+docker rm app-fibonacci-container
+```
