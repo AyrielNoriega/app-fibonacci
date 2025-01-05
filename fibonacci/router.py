@@ -19,6 +19,7 @@ fibonacci_router.tags = ["fibonacci"]
 
 @fibonacci_router.get("/fibonacci", dependencies=[Depends(auth.get_current_active_user)])
 async def get_current_fibonacci_series():
+    print("get_current_fibonacci_series !!")
     now = datetime.now()
     time_str = now.strftime("%H:%M:%S")
     return await FibonacciService().get_fibonacci_from_time(time_str)
