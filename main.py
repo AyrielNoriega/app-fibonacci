@@ -24,7 +24,7 @@ app.include_router(fibonacci_router)
 app.include_router(auth_router)
 
 
-@app.get("/test_user")
+@app.get("/test_users")
 async def test_user():
     db = database.Session()
 
