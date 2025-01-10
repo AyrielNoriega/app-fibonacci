@@ -83,11 +83,13 @@ Para iniciar la aplicación usando Docker, sigue estos pasos:
 
 1. Construye la imagen de Docker:
     ```bash
+    comando: docker build -t <imagen> <ruta-archivo-dockerfile>
     docker build -t app-fibonacci .
     ```
-
-2. Inicia un contenedor con la imagen creada:
+Inicia un contenedor con la imagen creada:
+2. I
     ```bash
+    comando: docker run -d -p 8000:8000 --name <nombre_contenedor> <nombre_imagen>
     docker run -d -p 8000:8000 --name app-fibonacci-container app-fibonacci
     ```
 
